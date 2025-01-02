@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:imaan_tree/arch/clean_arch/presentation/screens/home/screen_home.dart';
+import 'package:imaan_tree/arch/clean_arch/presentation/screens/imaan_dashboard.dart';
  
 void main() {
   runApp(const StartApp());
@@ -18,7 +19,7 @@ class StartApp extends StatelessWidget {
         colorScheme: ColorScheme.fromSeed(seedColor: Colors.deepPurple),
         useMaterial3: true,
       ),
-      home: const ScreenHome(title: 'Imaan Home Page'),
+      home: const ImaanDashboard(),
     );
   }
 }
