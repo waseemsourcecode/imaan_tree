@@ -1,0 +1,12 @@
+FEATURE REMEMBERANCE
+This feature job is to keep the user remember to align on Imaan 
+Because everyday to keep our imaan healthy we should remember.
+
+WORKING ALGO
+1.show remember page with beautiful crafted rememberence items 
+2.User can choose only one item 
+3.After user choose put in a track feature that will keep notify user on the desired schedule
+4.Keep user remeber track when user open notification and mark yes i remember
+5.Complete rememer feature 
+6.Show current tracking item after user choose 
+7.Show No of days left to complete 

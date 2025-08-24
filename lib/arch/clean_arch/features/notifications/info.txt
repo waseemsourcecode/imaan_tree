@@ -1,0 +1,4 @@
+:::::::::::::::::NOTIFICATION MODULE::::::::::::;
+
+-> Notification event should occur auto by device on selceted time
+-> User should able to read from Notification and able to mark as done 

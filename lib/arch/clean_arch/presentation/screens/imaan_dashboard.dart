@@ -1,8 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:imaan_tree/arch/clean_arch/data/local_ds.dart';
+import 'package:imaan_tree/arch/clean_arch/features/notifications/notification_widget.dart';
 import 'package:imaan_tree/arch/clean_arch/presentation/view_utils/level_configure.dart';
-
-import '../../data/models/imaanlevel.dart';
+ 
 
 class ImaanDashboard extends StatefulWidget{
   const ImaanDashboard({super.key});
@@ -14,6 +14,15 @@ class ImaanDashboard extends StatefulWidget{
   
 }
 class _StateImaanDashboard extends State<ImaanDashboard>{
+
+         final NotificationModel notification = NotificationModel(
+  title: "Test Remembrance",
+  body: "Remember to align your Imaan today!",
+  id: 1,
+  isDone: false,
+);
+
+
   @override
   Widget build(BuildContext context) {
    var imaanLevels =   LocalDs.getAllLevels();
@@ -88,6 +97,7 @@ fit: BoxFit.cover,
                     mainAxisAlignment: MainAxisAlignment.center,
                     crossAxisAlignment: CrossAxisAlignment.center,
                   children: [
+             NotificationWidget(notification: notification),
                     Text("Level:" + level.title,style: TextStyle(fontSize: 30, color: Colors.white,fontWeight: FontWeight.bold),),
                                   Row(
                                     mainAxisAlignment: MainAxisAlignment.center,
