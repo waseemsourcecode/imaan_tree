@@ -49,12 +49,21 @@ class NotificationWidget extends StatelessWidget {
                 ? null
                 : () async {
                     // Mark as done
-                    await NotificationService.markNotificationAsDone(notification.id);
+                    final scheduledTime =
+                        DateTime.now().add(Duration(minutes: 1));
+
+                    NotificationService.scheduleNotification(
+                      200,
+                      "Evening Reminder",
+                      "Time for your remembrance ✨",
+                      scheduledTime,
+                    );
+
                     ScaffoldMessenger.of(context).showSnackBar(
-                      const SnackBar(content: Text("Marked as done!")),
+                      const SnackBar(content: Text("Test schedulr")),
                     );
                   },
-            child: const Text("Mark as Done"),
+            child: const Text("Test schedule Notification"),
           ),
         ],
       ),

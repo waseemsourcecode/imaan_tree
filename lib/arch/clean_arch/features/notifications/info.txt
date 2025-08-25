@@ -2,3 +2,4 @@
 
 -> Notification event should occur auto by device on selceted time
 -> User should able to read from Notification and able to mark as done 
+-> On Done a user stat module should be updated with timestamp and hadit id
