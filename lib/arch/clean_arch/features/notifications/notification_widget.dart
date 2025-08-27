@@ -50,7 +50,7 @@ class NotificationWidget extends StatelessWidget {
                 : () async {
                     // Mark as done
                     final scheduledTime =
-                        DateTime.now().add(Duration(minutes: 1));
+                        DateTime.now().add(Duration(minutes: 5));
 
                     NotificationService.scheduleNotification(
                       200,

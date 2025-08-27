@@ -128,7 +128,7 @@ static Future<void> init() async {
     priority: Priority.high,
     styleInformation: bigTextStyleInformation,
     actions: <AndroidNotificationAction>[
-      AndroidNotificationAction(
+      const AndroidNotificationAction(
         'mark_done',
         'Mark as Done',
         showsUserInterface: true,
@@ -140,16 +140,17 @@ static Future<void> init() async {
   final NotificationDetails details =
       NotificationDetails(android: androidDetails);
 
-  await _plugin.zonedSchedule(
-    id,
-    title,
-    body,
-    tz.TZDateTime.from(scheduledTime, tz.local),
-    details,
-    androidScheduleMode: AndroidScheduleMode.inexact, // ✅ required
-    payload: 'scheduled',
-    matchDateTimeComponents: DateTimeComponents.dateAndTime, // ✅ optional
-  );
+ await _plugin.zonedSchedule(
+  id,
+  title,
+  body,
+  tz.TZDateTime.from(scheduledTime, tz.local),
+  details,
+  androidScheduleMode: AndroidScheduleMode.inexact,
+  payload: 'scheduled',
+  matchDateTimeComponents: DateTimeComponents.dateAndTime,//for daily
+);
+
 }
 
 
