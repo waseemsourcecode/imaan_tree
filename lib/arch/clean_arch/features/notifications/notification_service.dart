@@ -9,7 +9,7 @@ class NotificationService {
   static final FlutterLocalNotificationsPlugin _plugin =
       FlutterLocalNotificationsPlugin();
 
- // static Future<void> init() async {
+  // static Future<void> init() async {
   //   const AndroidInitializationSettings androidSettings =
   //       AndroidInitializationSettings('@mipmap/ic_launcher');
 
@@ -28,72 +28,70 @@ class NotificationService {
   //   );
   // }
 
+  static Future<void> init() async {
+    const AndroidInitializationSettings androidSettings =
+        AndroidInitializationSettings('@mipmap/ic_launcher');
 
-static Future<void> init() async {
-  const AndroidInitializationSettings androidSettings =
-      AndroidInitializationSettings('@mipmap/ic_launcher');
+    final InitializationSettings settings =
+        InitializationSettings(android: androidSettings);
 
-  final InitializationSettings settings =
-      InitializationSettings(android: androidSettings);
+    await _plugin.initialize(
+      settings,
+      onDidReceiveNotificationResponse: (NotificationResponse response) async {
+        print('🔔 Notification tapped!');
+        print('➡️ actionId: ${response.actionId}');
+        print('➡️ payload: ${response.payload}');
+        print('➡️ id: ${response.id}');
 
-  await _plugin.initialize(
-    settings,
-    onDidReceiveNotificationResponse: (NotificationResponse response) async {
-      print('🔔 Notification tapped!');
-      print('➡️ actionId: ${response.actionId}');
-      print('➡️ payload: ${response.payload}');
-      print('➡️ id: ${response.id}');
+        if (response.actionId == 'mark_done') {
+          await markNotificationAsDone(response.id ?? 0);
+        }
+      },
+    );
 
-      if (response.actionId == 'mark_done') {
-        await markNotificationAsDone(response.id ?? 0);
-      }
-    },
-  );
-
-  // ✅ Initialize timezone DB
-  tz.initializeTimeZones();
-}
-
+    // ✅ Initialize timezone DB
+    tz.initializeTimeZones();
+  }
 
   static Future<void> showRemembranceNotification(
-    int id, String title, String body) async {
-  final BigTextStyleInformation bigTextStyleInformation =
-      BigTextStyleInformation(
-    body,
-    htmlFormatBigText: true,
-    contentTitle: title,
-    htmlFormatContentTitle: true,
-  );
+      int id, String title, String body) async {
+    final BigTextStyleInformation bigTextStyleInformation =
+        BigTextStyleInformation(
+      body,
+      htmlFormatBigText: true,
+      contentTitle: title,
+      htmlFormatContentTitle: true,
+    );
 
-  final AndroidNotificationDetails androidDetails =
-      AndroidNotificationDetails(
-    'remembrance_channel',
-    'Remembrance',
-    channelDescription: 'Reminders to align on Imaan',
-    importance: Importance.max,
-    priority: Priority.high,
-    styleInformation: bigTextStyleInformation,
-    actions: <AndroidNotificationAction>[
-      const AndroidNotificationAction(
-        'mark_done',
-        'Mark as Done',
-        showsUserInterface: true,
-        cancelNotification: true,
-      ),
-    ],
-  );
+    final AndroidNotificationDetails androidDetails =
+        AndroidNotificationDetails(
+      'remembrance_channel',
+      'Remembrance',
+      channelDescription: 'Reminders to align on Imaan',
+      importance: Importance.max,
+      priority: Priority.high,
+      styleInformation: bigTextStyleInformation,
+      actions: <AndroidNotificationAction>[
+        const AndroidNotificationAction(
+          'mark_done',
+          'Mark as Done',
+          showsUserInterface: true,
+          cancelNotification: true,
+        ),
+      ],
+    );
 
-  final NotificationDetails details =
-      NotificationDetails(android: androidDetails);
+    final NotificationDetails details =
+        NotificationDetails(android: androidDetails);
 
-  await _plugin.show(
-    id,
-    title,
-    body,
-    details,
-    payload: 'remembrance',
-  );
-}
+    await _plugin.show(
+      id,
+      title,
+      body,
+      details,
+      payload: 'remembrance',
+    );
+  }
 
   static Future<void> markNotificationAsDone(int id) async {
     print("Marking notification $id as done...");
@@ -105,55 +103,50 @@ static Future<void> init() async {
     print("Notification $id marked as done and removed.");
   }
 
- static Future<void> scheduleNotification(
-  int id,
-  String title,
-  String body,
-  DateTime scheduledTime,
-) async {
-  final BigTextStyleInformation bigTextStyleInformation =
-      BigTextStyleInformation(
-    body,
-    htmlFormatBigText: true,
-    contentTitle: title,
-    htmlFormatContentTitle: true,
-  );
+  static Future<void> scheduleNotification(
+    int id,
+    String title,
+    String body,
+    DateTime scheduledTime,
+  ) async {
+    final BigTextStyleInformation bigTextStyleInformation =
+        BigTextStyleInformation(
+      body,
+      htmlFormatBigText: true,
+      contentTitle: title,
+      htmlFormatContentTitle: true,
+    );
 
-  final AndroidNotificationDetails androidDetails =
-      AndroidNotificationDetails(
-    'scheduled_channel',
-    'Scheduled Notifications',
-    channelDescription: 'Notifications that fire at a specific time',
-    importance: Importance.max,
-    priority: Priority.high,
-    styleInformation: bigTextStyleInformation,
-    actions: <AndroidNotificationAction>[
-      const AndroidNotificationAction(
-        'mark_done',
-        'Mark as Done',
-        showsUserInterface: true,
-        cancelNotification: true,
-      ),
-    ],
-  );
+    final AndroidNotificationDetails androidDetails =
+        AndroidNotificationDetails(
+      'scheduled_channel',
+      'Scheduled Notifications',
+      channelDescription: 'Notifications that fire at a specific time',
+      importance: Importance.max,
+      priority: Priority.high,
+      styleInformation: bigTextStyleInformation,
+      actions: <AndroidNotificationAction>[
+        const AndroidNotificationAction(
+          'mark_done',
+          'Mark as Done',
+          showsUserInterface: true,
+          cancelNotification: true,
+        ),
+      ],
+    );
 
-  final NotificationDetails details =
-      NotificationDetails(android: androidDetails);
+    final NotificationDetails details =
+        NotificationDetails(android: androidDetails);
 
- await _plugin.zonedSchedule(
-  id,
-  title,
-  body,
-  tz.TZDateTime.from(scheduledTime, tz.local),
-  details,
-  androidScheduleMode: AndroidScheduleMode.inexact,
-  payload: 'scheduled',
-  matchDateTimeComponents: DateTimeComponents.dateAndTime,//for daily
-);
-
-}
-
-
-
-
+    await _plugin.zonedSchedule(
+      id,
+      title,
+      body,
+      tz.TZDateTime.from(scheduledTime, tz.local),
+      details,
+      androidScheduleMode: AndroidScheduleMode.inexact,
+      payload: 'scheduled',
+      matchDateTimeComponents: DateTimeComponents.dateAndTime, //for daily
+    );
+  }
 }
