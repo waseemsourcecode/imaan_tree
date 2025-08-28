@@ -28,6 +28,7 @@ class NotificationWidget extends StatelessWidget {
     return Padding(
       padding: const EdgeInsets.all(16.0),
       child: Column(
+        mainAxisAlignment: MainAxisAlignment.center,
         children: [
           ElevatedButton(
             onPressed: () async {
@@ -50,14 +51,16 @@ class NotificationWidget extends StatelessWidget {
                 : () async {
                     // Mark as done
                     final scheduledTime =
-                        DateTime.now().add(Duration(minutes: 5));
+                        DateTime.now().add(const Duration(minutes: 3));
 
-                    NotificationService.scheduleNotification(
-                      200,
-                      "Evening Reminder",
-                      "Time for your remembrance ✨",
-                      scheduledTime,
-                    );
+NotificationService.scheduleLocalNotification(title: "title", body: "bodyoj", 
+hour: 11, minute: 25,);
+                    // NotificationService.scheduleNotification(
+                    //   200,
+                    //   "Evening Reminder",
+                    //   "Time for your remembrance ✨",
+                    //   scheduledTime,
+                    // );
 
                     ScaffoldMessenger.of(context).showSnackBar(
                       const SnackBar(content: Text("Test schedulr")),
